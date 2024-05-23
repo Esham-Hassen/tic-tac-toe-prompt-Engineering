@@ -1,6 +1,8 @@
 let fields = [null, null, null, null, null, null, null, null, null];
 let currentPlayer = "circle";
 let gameOver = false;
+let Audio_success = new Audio('audio/success.mp3');
+
 
 function init() {
   render();
@@ -86,6 +88,37 @@ function checkWin() {
   return null; // No winner found, return null
 }
 
+// function drawWinningLine(winLine) {
+//   const cells = document.querySelectorAll("td");
+//   const startCell = cells[winLine[0]];
+//   const endCell = cells[winLine[2]];
+
+//   const startPos = startCell.getBoundingClientRect();
+//   const endPos = endCell.getBoundingClientRect();
+
+//   const tablePos = document.querySelector("table").getBoundingClientRect();
+
+//   const svgHtml = `
+//       <svg width="${tablePos.width}" height="${tablePos.height}" viewBox="0 0 ${
+//     tablePos.width
+//   } ${
+//     tablePos.height
+//   }" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0;">
+//         <line x1="${
+//           startPos.left - tablePos.left + startCell.clientWidth / 2
+//         }" y1="${startPos.top - tablePos.top + startCell.clientHeight / 2}" 
+//               x2="${
+//                 endPos.left - tablePos.left + endCell.clientWidth / 2
+//               }" y2="${endPos.top - tablePos.top + endCell.clientHeight / 2}" 
+//               stroke="white" stroke-width="5">
+//           <animate attributeName="stroke-dasharray" from="0 300" to="300 0" dur="1s" fill="freeze" />
+//         </line>
+//       </svg>
+//     `;
+//   document.querySelector("table").innerHTML += svgHtml;
+// }
+
+
 function drawWinningLine(winLine) {
   const cells = document.querySelectorAll("td");
   const startCell = cells[winLine[0]];
@@ -97,24 +130,22 @@ function drawWinningLine(winLine) {
   const tablePos = document.querySelector("table").getBoundingClientRect();
 
   const svgHtml = `
-      <svg width="${tablePos.width}" height="${tablePos.height}" viewBox="0 0 ${
-    tablePos.width
-  } ${
-    tablePos.height
-  }" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0;">
-        <line x1="${
-          startPos.left - tablePos.left + startCell.clientWidth / 2
-        }" y1="${startPos.top - tablePos.top + startCell.clientHeight / 2}" 
-              x2="${
-                endPos.left - tablePos.left + endCell.clientWidth / 2
-              }" y2="${endPos.top - tablePos.top + endCell.clientHeight / 2}" 
+      <svg width="${tablePos.width}" height="${tablePos.height}" viewBox="0 0 ${tablePos.width} ${tablePos.height}" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0;">
+        <line x1="${startPos.left - tablePos.left + startCell.clientWidth / 2}" y1="${startPos.top - tablePos.top + startCell.clientHeight / 2}" 
+              x2="${endPos.left - tablePos.left + endCell.clientWidth / 2}" y2="${endPos.top - tablePos.top + endCell.clientHeight / 2}" 
               stroke="white" stroke-width="5">
           <animate attributeName="stroke-dasharray" from="0 300" to="300 0" dur="1s" fill="freeze" />
         </line>
       </svg>
     `;
   document.querySelector("table").innerHTML += svgHtml;
+
+  // Play the winning sound
+  const winSound = document.getElementById("winSound");
+  Audio_success.play();
 }
+
+
 
 function generateSvgCircle() {
   const color = "#FFC000";
